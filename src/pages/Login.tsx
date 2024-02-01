@@ -13,7 +13,7 @@ const Login = () => {
 
     const navigate = useNavigate();
     //@ts-ignore
-    const {storeTokenInLS, setUser} = useAuth()
+    const { setToken, setUser } = useAuth();
 
 
     const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -50,8 +50,8 @@ const Login = () => {
             const resp = await res.json();
             console.log(resp);
             if (res.ok) {
-                // storeTokenInLS(resp.data.token)
-                setUser({name: "", email: ""})
+                setUser({name: resp.data.name, email: resp.data.email})
+                setToken(resp.data.token)
                 navigate('/dashboard')
             }
             

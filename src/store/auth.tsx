@@ -17,11 +17,6 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<UserProfile | null> (null);
     const [quizzes, setQuizzes] = useState<Quiz[]> ([]);
 
-    const storeTokenInLS = (token: string) => {
-        setToken(token);
-        return localStorage.setItem('token', token);
-    };
-
     const logout = async () => {
         try {
             console.log("logging out -> ", token)
@@ -45,7 +40,6 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         } catch (error) {
             console.log(error)
         }
-        // return localStorage.removeItem('token');
     };
 
     const userAuthentication = async () => {
@@ -109,7 +103,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     return (
         //@ts-ignore
-        <AuthContext.Provider value={{ storeTokenInLS, logout, user, setUser }}>
+        <AuthContext.Provider value={{setToken, logout, user, setUser }}>
             {children}
         </AuthContext.Provider>
     );
