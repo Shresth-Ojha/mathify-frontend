@@ -65,9 +65,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
             if(res.ok){
                 setUser(resp.data.user)
-                navigate('/dashboard')
-            } else {
-                navigate('/login')
+                navigate(window.location.pathname)
             }
 
         } catch (error) {
@@ -82,7 +80,8 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`
-                }
+                },
+                credentials: 'include' as RequestCredentials
             }
 
             const res = await fetch(import.meta.env.VITE_BACKEND + '/quiz', requestOptions);
@@ -103,7 +102,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     return (
         //@ts-ignore
-        <AuthContext.Provider value={{setToken, logout, user, setUser }}>
+        <AuthContext.Provider
+            value={{ setToken, logout, user, setUser, quizzes, getQuizzes }}
+        >
             {children}
         </AuthContext.Provider>
     );

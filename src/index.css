@@ -1,4 +1,4 @@
-* {
+/* * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -23,12 +23,12 @@ h1{
     font-weight: bold;
 }
 
-/* p, li, label, input, textarea {
+p, li, label, input, textarea {
     font-size: 1.8rem;
     line-height: 1.5;
     letter-spacing: 0.1rem;
     word-spacing: 0.06rem;
-} */
+}
 
 a{
     font-size: 1.8rem;
@@ -47,4 +47,4 @@ li {
     padding: 4.2rem 2.4rem;
     margin: 0 auto;
 }
-
+ */
