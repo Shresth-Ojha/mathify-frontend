@@ -60,11 +60,16 @@ const Register = () => {
 
     return (
         <>
-            <Container className="d-flex min-vh-100 justify-content-center align-items-center">
+            <Container
+                className="d-flex justify-content-center align-items-center"
+                style={{ height: '95vh' }}
+            >
                 <Row>
                     <Col>
                         <Form onSubmit={handleSubmit}>
-                            <h1 className="main-heading mb-3">Registration Form</h1>
+                            <h1 className="main-heading mb-3">
+                                Registration Form
+                            </h1>
                             <Form.Group
                                 className="mb-3"
                                 controlId="formBasicEmail" //!email to name
@@ -116,89 +121,12 @@ const Register = () => {
                                 />
                             </Form.Group>
                             <Button variant="primary" type="submit">
-                                Login
+                                Register
                             </Button>
                         </Form>
                     </Col>
                 </Row>
             </Container>
-            <section>
-                <main>
-                    <div className="section-reg">
-                        <div className="container grid grid-two-cols">
-                            <div className="reg-img">
-                                <img
-                                    src="/images/reg2.svg"
-                                    alt="register-image"
-                                    width={400}
-                                    height={500}
-                                />
-                            </div>
-                            <div className="reg-form">
-                                <h1 className="main-heading mb-3">
-                                    Registration Form
-                                </h1>
-                                <br />
-                                <form onSubmit={handleSubmit}>
-                                    <div>
-                                        <label htmlFor="name">Name</label>{' '}
-                                        <br />
-                                        <input
-                                            type="text"
-                                            id="name"
-                                            placeholder="name"
-                                            name="name"
-                                            required
-                                            autoComplete="off"
-                                            value={userRegister.name.toString()}
-                                            onChange={handleInput}
-                                        />
-                                    </div>
-                                    <div>
-                                        <label htmlFor="email">Email</label>
-                                        <br />
-                                        <input
-                                            type="text"
-                                            id="email"
-                                            placeholder="email"
-                                            name="email"
-                                            required
-                                            autoComplete="off"
-                                            value={userRegister.email.toString()}
-                                            onChange={handleInput}
-                                        />
-                                    </div>
-                                    <div>
-                                        <label htmlFor="password">
-                                            Password
-                                        </label>
-                                        <br />
-                                        <input
-                                            // value={'testUser'}
-                                            type="password"
-                                            id="password"
-                                            placeholder="password"
-                                            name="password"
-                                            required
-                                            autoComplete="off"
-                                            value={userRegister.password.toString()}
-                                            onChange={handleInput}
-                                        />
-                                    </div>
-
-                                    <br />
-                                    <button
-                                        type="submit"
-                                        className="btn btn-submit"
-                                    >
-                                        Register
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </main>
-            </section>
         </>
     );
 };

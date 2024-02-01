@@ -16,8 +16,10 @@ interface Question {
     options: String[];
 }
 
-export interface Quiz {
+export interface QuizType {
     name: String,
     questions: Question[],
-    answers: Object
+    answers: Object,
+    author: String,
+    is_published: Boolean
 }

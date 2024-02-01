@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../store/auth';
 
@@ -18,7 +18,13 @@ const Login = () => {
 
     const navigate = useNavigate();
     //@ts-ignore
-    const { setToken, setUser } = useAuth();
+    const { setToken, setUser, user } = useAuth();
+
+    useEffect(() => {
+        if(!!user) {
+            navigate('/dashboard')
+        }
+    })
 
 
     const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -67,7 +73,7 @@ const Login = () => {
 
     return (
         <>
-            <Container className="d-flex min-vh-100 justify-content-center align-items-center">
+            <Container className="d-flex justify-content-center align-items-center" style={{height:"95vh"}}>
                 <Row>
                     <Col>
                         <Form onSubmit={handleSubmit}>
@@ -115,67 +121,6 @@ const Login = () => {
                 </Row>
             </Container>
 
-            {/* <section>
-                <main>
-                    <div className="section-login">
-                        <div className="container grid grid-two-cols">
-                            <div className="login-img">
-                                <img
-                                    src="/images/login.svg"
-                                    alt="login-image"
-                                    width={400}
-                                    height={500}
-                                />
-                            </div>
-                            <div className="login-form">
-                                <h1 className="main-heading mb-3">
-                                    Login Form
-                                </h1>
-                                <br />
-                                <form onSubmit={handleSubmit}>
-                                    <div>
-                                        <label htmlFor="email">Email</label>
-                                        <input
-                                            // value={'testUser@gmail.com'}
-                                            type="text"
-                                            id="email"
-                                            placeholder="email"
-                                            name="email"
-                                            required
-                                            autoComplete="off"
-                                            value={loginCred.email.toString()}
-                                            onChange={handleInput}
-                                        />
-                                    </div>
-                                    <div>
-                                        <label htmlFor="password">
-                                            Password
-                                        </label>
-                                        <input
-                                            type="password"
-                                            id="password"
-                                            placeholder="password"
-                                            name="password"
-                                            required
-                                            autoComplete="off"
-                                            value={loginCred.password.toString()}
-                                            onChange={handleInput}
-                                        />
-                                    </div>
-
-                                    <br />
-                                    <button
-                                        type="submit"
-                                        className="btn btn-submit"
-                                    >
-                                        Login
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </main>
-            </section> */}
         </>
     );
 };

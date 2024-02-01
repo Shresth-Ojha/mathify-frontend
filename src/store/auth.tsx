@@ -6,7 +6,7 @@ import {
     useState,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Quiz, UserProfile } from '../utils/interfaces';
+import { QuizType, UserProfile } from '../utils/interfaces';
 
 const AuthContext = createContext({});
 
@@ -15,7 +15,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [token, setToken] = useState<string>('');
     
     const [user, setUser] = useState<UserProfile | null> (null);
-    const [quizzes, setQuizzes] = useState<Quiz[]> ([]);
+    const [quizzes, setQuizzes] = useState<QuizType[]> ([]);
 
     const logout = async () => {
         try {
