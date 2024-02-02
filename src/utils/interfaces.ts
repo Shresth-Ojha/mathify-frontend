@@ -9,7 +9,7 @@ export interface UserProfile {
     email: String;
 }
 
-interface Question {
+export interface Question {
     question_no: number;
     question_type: 'min/max' | 'match' | 'input';
     question_text: String;
@@ -17,6 +17,7 @@ interface Question {
 }
 
 export interface QuizType {
+    _id: String,
     name: String,
     questions: Question[],
     answers: Object,

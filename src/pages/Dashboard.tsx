@@ -1,31 +1,28 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useAuth } from '../store/auth';
 import { QuizType } from '../utils/interfaces';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import { Container, ListGroup } from 'react-bootstrap';
+import { Container, ListGroup, Nav } from 'react-bootstrap';
 import Quiz from './Quiz';
 
-const Dashboard = ({
-    activeQuiz,
-    setActiveQuiz
-}: {
-    activeQuiz: QuizType | null,
-    setActiveQuiz: React.Dispatch<React.SetStateAction<QuizType | null>>;
-}) => {
-    const navigate = useNavigate();
-
+const Dashboard = () => {
     //@ts-ignore
     const { quizzes, getQuizzes, user } = useAuth();
+    
+    if(!user){
+        console.log("Not logged in, go to login")
+        return <Navigate to='/login' />
+    }
+
+    const navigate = useNavigate();
+
     const samplequizzes = [{ name: 'basic math2' }];
 
     useEffect(() => {
-        if (!user) {
-            navigate('/login');
-        }
-        console.log('getting quizzes');
+        console.log('Fetching quizzes..');
         getQuizzes();
     }, []);
 
@@ -33,56 +30,53 @@ const Dashboard = ({
         if (!q.is_published) {
             alert('Not published yet!');
         } else {
-            setActiveQuiz(q);
+            alert("starting")
+            navigate('/quiz/' + q._id);
+            return
         }
     };
 
     return (
-        <>
-            {!!activeQuiz ? (
-                <Quiz activeQuiz={activeQuiz} />
-            ) : (
-                <Container className="mt-5 d-flex flex-column align-items-center">
-                    <h1>Quizzes</h1>
-                    <Container className="mt-2 mb-5 d-flex flex-wrap justify-content-center align-items-start">
-                        {quizzes.map((q: QuizType) => {
-                            return (
-                                <Card
-                                    className="m-3"
-                                    style={{ width: '300px', height: 'auto' }}
+        <Container className="mt-5 d-flex flex-column align-items-center">
+            <h1>Quizzes</h1>
+            <Container className="mt-3 mb-5 d-flex flex-wrap justify-content-center align-items-start">
+                {quizzes.map((q: QuizType, index: number) => {
+                    return (
+                        <Card
+                            className="m-3"
+                            style={{ width: '300px', height: 'auto' }}
+                            key={index}
+                        >
+                            <Card.Body>
+                                <Card.Title>{q.name}</Card.Title>
+                                <Card.Subtitle className="mb-4 text-muted">
+                                    {q.is_published
+                                        ? 'Published!'
+                                        : 'Not Published'}
+                                </Card.Subtitle>
+                                <Card.Text>
+                                    Ace <b> {q.name} </b>quiz!
+                                </Card.Text>
+                            </Card.Body>
+                            <ListGroup className="list-group-flush">
+                                <ListGroup.Item>
+                                    Created By: {q.author}
+                                </ListGroup.Item>
+                            </ListGroup>
+                            <Card.Body>
+                                <Button
+                                    variant="primary"
+                                    onClick={() => startAttempt(q)}
                                 >
-                                    <Card.Body>
-                                        <Card.Title>{q.name}</Card.Title>
-                                        <Card.Subtitle className="mb-4 text-muted">
-                                            {q.is_published
-                                                ? 'Published!'
-                                                : 'Not Published'}
-                                        </Card.Subtitle>
-                                        <Card.Text>
-                                            Ace <b> {q.name} </b>quiz!
-                                        </Card.Text>
-                                    </Card.Body>
-                                    <ListGroup className="list-group-flush">
-                                        <ListGroup.Item>
-                                            Created By: {q.author}
-                                        </ListGroup.Item>
-                                    </ListGroup>
-                                    <Card.Body>
-                                        <Button
-                                            variant="primary"
-                                            onClick={() => startAttempt(q)}
-                                        >
-                                            Attempt
-                                        </Button>
-                                    </Card.Body>
-                                </Card>
-                            );
-                        })}
-                    </Container>
-                    {!quizzes.length ? <>No quizzes yet..</> : <></>}
-                </Container>
-            )}
-        </>
+                                    Attempt
+                                </Button>
+                            </Card.Body>
+                        </Card>
+                    );
+                })}
+            </Container>
+            {!quizzes.length ? <>No quizzes yet..</> : <></>}
+        </Container>
     );
 };
 

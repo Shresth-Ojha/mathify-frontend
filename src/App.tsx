@@ -12,36 +12,18 @@ import { useState } from 'react';
 import { QuizType } from './utils/interfaces';
 
 const App = () => {
-    const [activeQuiz, setActiveQuiz] = useState<QuizType | null>(null);
-    
     return (
         <>
             <Navigationbar />
             <Routes>
-                <Route
-                    path="/"
-                    element={
-                        <Dashboard
-                            activeQuiz={activeQuiz}
-                            setActiveQuiz={setActiveQuiz}
-                        />
-                    }
-                />
-                <Route
-                    path="/dashboard"
-                    element={
-                        <Dashboard
-                            activeQuiz={activeQuiz}
-                            setActiveQuiz={setActiveQuiz}
-                        />
-                    }
-                />
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/aboutus" element={<AboutUs />} />
                 <Route path="/logout" element={<Logout />} />
                 <Route path="/profile" element={<Profile />} />
-                <Route path="/quiz" element={<Quiz activeQuiz={null} />} />
+                <Route path="/quiz/:quizId" element={<Quiz/>} />
             </Routes>
         </>
     );

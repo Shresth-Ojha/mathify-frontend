@@ -7,6 +7,7 @@ import {
 } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { QuizType, UserProfile } from '../utils/interfaces';
+import { Container } from 'react-bootstrap';
 
 const AuthContext = createContext({});
 
@@ -14,8 +15,10 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     const navigate = useNavigate();
     const [token, setToken] = useState<string>('');
     
+    const [loading, setLoading] = useState<boolean> (true);
     const [user, setUser] = useState<UserProfile | null> (null);
     const [quizzes, setQuizzes] = useState<QuizType[]> ([]);
+    const [currentExam, setCurrentExam] = useState<QuizType | null> (null);
 
     const logout = async () => {
         try {
@@ -65,11 +68,11 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
             if(res.ok){
                 setUser(resp.data.user)
-                navigate(window.location.pathname)
             }
+            setLoading(false);
 
         } catch (error) {
-            console.log(error);
+            console.log("Error while authenticating: ", error);
         }
     };
 
@@ -96,6 +99,54 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
     }
 
+
+    const startExam = async (quizId:string) => {
+        try {
+            const requestOptions = {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                credentials: 'include' as RequestCredentials
+            }
+
+            const res = await fetch(import.meta.env.VITE_BACKEND + '/exam/' + quizId, requestOptions);
+            const resp = await res.json();
+            console.log(resp)
+            if(res.ok){
+                setCurrentExam(resp);
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const submitExam = async(quizId: string, submission:any) => {
+        try {
+            const reqBody = {
+                quizId, submissions: submission
+            }
+            const requestOptions = {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                credentials: 'include' as RequestCredentials,
+                body: JSON.stringify(reqBody)
+            }
+
+            const res = await fetch(import.meta.env.VITE_BACKEND + '/exam', requestOptions);
+            const resp = await res.json();
+            console.log(resp)
+            if(res.ok){
+                console.log("submiited brother")
+                return resp.data.report._id
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     useEffect(() => {
         userAuthentication();
     }, []);
@@ -103,9 +154,27 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     return (
         //@ts-ignore
         <AuthContext.Provider
-            value={{ setToken, logout, user, setUser, quizzes, getQuizzes }}
+            value={{
+                setToken,
+                logout,
+                user,
+                setUser,
+                quizzes,
+                getQuizzes,
+                currentExam,
+                startExam,
+                submitExam,
+            }}
         >
-            {children}
+            <div className="w-100 min-vh-100 d-flex flex-column m-0 p-0">
+                {loading ? (
+                    <div className="d-flex mx-auto my-auto">
+                        <img src="/images/loading.gif" alt="" />
+                    </div>
+                ) : (
+                    children
+                )}
+            </div>
         </AuthContext.Provider>
     );
 };
