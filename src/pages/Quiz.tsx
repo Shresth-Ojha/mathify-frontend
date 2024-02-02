@@ -130,7 +130,7 @@ const Quiz = () => {
         '1': ['22'],
     });
     const [particularQuestionSubmission, setParticularQuestionSubmission] =
-        useState<string[]>([]);
+        useState<string[]>([ ]);
 
     const [quizLoading, setQuizLoading] = useState<boolean>(true);
 
@@ -161,6 +161,13 @@ const Quiz = () => {
             setCurrentQuestion(currentQuestion + 1);
         }
     };
+
+    const backHandler = () => {
+        setCurrentQuestion(currentQuestion - 1);
+        setParticularQuestionSubmission(submission[currentQuestion]);
+        console.log(particularQuestionSubmission);
+        setAreyousure(false);
+    }
 
     const handleExamSubmit = async () => {
         submitExam(currentExam._id, submission)
@@ -199,6 +206,9 @@ const Quiz = () => {
                         'min/max' ? (
                             <QMinMax
                                 options={questions[currentQuestion].options}
+                                particularQuestionSubmission={
+                                    particularQuestionSubmission
+                                }
                                 setParticularQuestionSubmission={
                                     setParticularQuestionSubmission
                                 }
@@ -227,8 +237,7 @@ const Quiz = () => {
                             variant="primary"
                             size="lg"
                             onClick={() => {
-                                setCurrentQuestion(currentQuestion - 1);
-                                setAreyousure(false);
+                                backHandler()
                             }}
                             disabled={currentQuestion == 0}
                         >
