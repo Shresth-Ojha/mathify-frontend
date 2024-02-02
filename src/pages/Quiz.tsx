@@ -126,11 +126,9 @@ const Quiz = () => {
 
     const [currentQuestion, setCurrentQuestion] = useState<number>(0);
     const [areyousure, setAreyousure] = useState<boolean>(false);
-    const [submission, setSubmission] = useState<{ [key: number]: string[] }>({
-        '1': ['22'],
-    });
+    const [submission, setSubmission] = useState<{ [key: number]: string[] }>({});
     const [particularQuestionSubmission, setParticularQuestionSubmission] =
-        useState<string[]>([ ]);
+        useState<string[]>([]);
 
     const [quizLoading, setQuizLoading] = useState<boolean>(true);
 
@@ -149,25 +147,28 @@ const Quiz = () => {
             ...submission,
             [currentQuestion + 1]: particularQuestionSubmission,
         });
-        if (currentQuestion == questions.length - 1) {
+        if (currentQuestion >= questions.length - 1) {
             if (!areyousure) {
-                setParticularQuestionSubmission([]);
+                // setParticularQuestionSubmission([]);
                 setAreyousure(true);
             } else {
                 handleExamSubmit();
             }
         } else {
-            setParticularQuestionSubmission([]);
-            setCurrentQuestion(currentQuestion + 1);
+            if (submission[currentQuestion+1+1]) {
+                setParticularQuestionSubmission(submission[currentQuestion+1+1]);
+            } else {
+                setParticularQuestionSubmission(['Not Done']);
+            }
         }
+        setCurrentQuestion(currentQuestion + 1);
     };
 
     const backHandler = () => {
         setCurrentQuestion(currentQuestion - 1);
         setParticularQuestionSubmission(submission[currentQuestion]);
-        console.log(particularQuestionSubmission);
         setAreyousure(false);
-    }
+    };
 
     const handleExamSubmit = async () => {
         submitExam(currentExam._id, submission)
@@ -179,7 +180,6 @@ const Quiz = () => {
             })
             .catch((error: any) => console.log('ERROER  ', error));
     };
-
 
     return (
         <div className="w-100 d-flex flex-grow-1 flex-column m-0 p-0 booo">
@@ -197,13 +197,23 @@ const Quiz = () => {
                             <h1>hey {currentExam.name} </h1>
                         </div>
                         <div className="mt-4">
-                            <h2>{questions[currentQuestion].question_text}</h2>
+                            {currentQuestion === questions.length ? (
+                                ''
+                            ) : (
+                                <h2>
+                                    {questions[currentQuestion].question_text}
+                                </h2>
+                            )}
                         </div>
                     </Container>
 
                     <Container>
-                        {questions[currentQuestion].question_type ==
-                        'min/max' ? (
+                        {currentQuestion === questions.length ? (
+                            <h3 className="text-center">
+                                DO YOU WANT TO SUBMIT?
+                            </h3>
+                        ) : questions[currentQuestion].question_type ==
+                          'min/max' ? (
                             <QMinMax
                                 options={questions[currentQuestion].options}
                                 particularQuestionSubmission={
@@ -225,6 +235,9 @@ const Quiz = () => {
                         ) : (
                             <QInput
                                 options={questions[currentQuestion].options}
+                                particularQuestionSubmission={
+                                    particularQuestionSubmission
+                                }
                                 setParticularQuestionSubmission={
                                     setParticularQuestionSubmission
                                 }
@@ -237,18 +250,21 @@ const Quiz = () => {
                             variant="primary"
                             size="lg"
                             onClick={() => {
-                                backHandler()
+                                backHandler();
                             }}
                             disabled={currentQuestion == 0}
                         >
                             Back
                         </Button>
                         <h4>
-                            {currentQuestion + 1} / {questions.length}
+                            {currentQuestion <= questions.length - 1
+                                ? `${currentQuestion + 1} / ${questions.length}`
+                                : 'You are a CHAMP!'}
+                            {/* {currentQuestion + 1} / {questions.length} */}
                         </h4>
                         <Button
                             variant={
-                                currentQuestion != questions.length - 1
+                                currentQuestion < questions.length - 1
                                     ? 'primary'
                                     : areyousure
                                     ? 'warning'
@@ -259,7 +275,7 @@ const Quiz = () => {
                                 nextHandler();
                             }}
                         >
-                            {currentQuestion != questions.length - 1
+                            {currentQuestion < questions.length - 1
                                 ? 'Next'
                                 : areyousure
                                 ? 'Really?'

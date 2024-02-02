@@ -28,20 +28,17 @@ const QMinMax = ({
 
     useEffect(() => {
         for (let i = 0; i < options.length; i++) {
-          console.log(options[i])
-          console.log(particularQuestionSubmission[0])
             if (options[i] === particularQuestionSubmission[0]) {
                 setChosen(i+1);
-                console.log("wt")
             }
         }
     }, []);
     useEffect(() => {
         if (chosen === 0) {
             setParticularQuestionSubmission(['Not Done']);
+        } else {
+          setParticularQuestionSubmission([options[chosen - 1]]);
         }
-        setParticularQuestionSubmission([options[chosen - 1]]);
-        console.log('hi');
     }, [chosen]);
 
     return (

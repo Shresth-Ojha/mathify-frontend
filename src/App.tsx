@@ -8,8 +8,7 @@ import Logout from './pages/Logout';
 import Profile from './pages/Profile';
 import Dashboard from './pages/Dashboard';
 import Quiz from './pages/Quiz';
-import { useState } from 'react';
-import { QuizType } from './utils/interfaces';
+import Report from './pages/Report';
 
 const App = () => {
     return (
@@ -24,6 +23,7 @@ const App = () => {
                 <Route path="/logout" element={<Logout />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/quiz/:quizId" element={<Quiz/>} />
+                <Route path="/report/:quizId?" element={<Report />} />
             </Routes>
         </>
     );
