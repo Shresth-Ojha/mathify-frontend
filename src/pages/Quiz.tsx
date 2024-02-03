@@ -263,7 +263,7 @@ const Quiz = () => {
                         )}
                     </Container>
 
-                    <Container className="d-flex justify-content-between align-items-end">
+                    <Container className=" mt-4 d-flex justify-content-between align-items-end">
                         <Button
                             variant="primary"
                             size="lg"
