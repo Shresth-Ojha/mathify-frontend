@@ -39,6 +39,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
             console.log(resp);
 
             if (res.ok) {
+                localStorage.removeItem('jwttokenLC')
                 setUser(null);
                 setToken('');
             }
@@ -48,15 +49,19 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
 
     const userAuthentication = async () => {
-        const jwtToken = document.cookie.split('=')[1];
-        console.log(jwtToken);
-        setToken(jwtToken);
+        // const jwtToken = document.cookie.split('=')[1];
+        // console.log(jwtToken);
+        // setToken(jwtToken);
+
+        const jwtTokenLC = localStorage.getItem('jwttokenLC') || '';
+        setToken(jwtTokenLC)
+
 
         try {
             const requestOptions = {
                 method: 'GET',
                 headers: {
-                    Authorization: `Bearer ${jwtToken}`,
+                    Authorization: `Bearer ${jwtTokenLC}`,
                 },
                 credentials: 'include' as RequestCredentials,
             };

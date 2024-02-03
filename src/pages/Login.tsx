@@ -62,6 +62,7 @@ const Login = () => {
             console.log(resp);
             if (res.ok) {
                 setUser({name: resp.data.name, email: resp.data.email})
+                localStorage.setItem('jwttokenLC', resp.data.token)
                 setToken(resp.data.token)
                 navigate('/dashboard')
             }
