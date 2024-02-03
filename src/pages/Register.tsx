@@ -91,7 +91,7 @@ const Register = () => {
                             >
                                 <Form.Label>Email address</Form.Label>
                                 <Form.Control
-                                    type="text" //!change to email
+                                    type="email" //!change to email
                                     placeholder="Enter email"
                                     value={userRegister.email.toString()}
                                     name="email"

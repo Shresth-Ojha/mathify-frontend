@@ -85,7 +85,7 @@ const Login = () => {
                             >
                                 <Form.Label>Email address</Form.Label>
                                 <Form.Control
-                                    type="text"
+                                    type="email"
                                     placeholder="Enter email"
                                     value={loginCred.email.toString()}
                                     name="email"
