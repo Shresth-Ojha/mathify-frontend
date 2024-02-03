@@ -1,5 +1,4 @@
-import { Card, CardTitle, Col, Container, ListGroup, Row } from 'react-bootstrap';
-import { Question } from '../utils/interfaces';
+import { Card, CardTitle, Container } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 
 // const QMinMax = (props: { setCurrentChosen:any, question: Question }) => {

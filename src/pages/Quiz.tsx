@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Question, QuizType } from '../utils/interfaces';
+import { Question } from '../utils/interfaces';
 import { useAuth } from '../store/auth';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { Button, Container } from 'react-bootstrap';
@@ -130,6 +130,14 @@ const Quiz = () => {
     const [particularQuestionSubmission, setParticularQuestionSubmission] =
         useState<string[]>([]);
 
+
+    const [leftColorForMatchQ, setLeftColorForMatchQ] = useState<{
+        [key: number]: { [key: number]: string };
+    }>({}); //index of matching qn -> leftColor mapping
+    const [mapForMatchQ, setMapForMatchQ] = useState<any> ({}); //index of matching qn -> map mapping (reverse map we can generate)
+    const [mapReverseForMatchQ, setMapReverseForMatchQ] = useState<any> ({}); //index of matching qn -> map mapping (reverse map we can generate)
+
+
     const [quizLoading, setQuizLoading] = useState<boolean>(true);
 
     const { quizId } = useParams();
@@ -197,7 +205,7 @@ const Quiz = () => {
                             <h1>hey {currentExam.name} </h1>
                         </div>
                         <div className="mt-4">
-                            {currentQuestion === questions.length ? (
+                            {currentQuestion >= questions.length ? (
                                 ''
                             ) : (
                                 <h2>
@@ -208,7 +216,7 @@ const Quiz = () => {
                     </Container>
 
                     <Container>
-                        {currentQuestion === questions.length ? (
+                        {currentQuestion >= questions.length ? (
                             <h3 className="text-center">
                                 DO YOU WANT TO SUBMIT?
                             </h3>
@@ -228,9 +236,19 @@ const Quiz = () => {
                             <QMatch
                                 options={questions[currentQuestion].options}
                                 answers={answers[currentQuestion + 1]}
+                                particularQuestionSubmission={
+                                    particularQuestionSubmission
+                                }
                                 setParticularQuestionSubmission={
                                     setParticularQuestionSubmission
                                 }
+                                question_index={currentQuestion + 1}
+                                leftColorForMatchQ={leftColorForMatchQ}
+                                setLeftColorForMatchQ={setLeftColorForMatchQ}
+                                mapForMatchQ={mapForMatchQ}
+                                setMapForMatchQ={setMapForMatchQ}
+                                mapReverseForMatchQ={mapReverseForMatchQ}
+                                setMapReverseForMatchQ={setMapReverseForMatchQ}
                             />
                         ) : (
                             <QInput

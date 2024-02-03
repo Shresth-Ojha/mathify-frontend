@@ -24,3 +24,10 @@ export interface QuizType {
     author: String,
     is_published: Boolean
 }
+
+export interface ReportType {
+    quizName: String,
+    score: number,
+    total: number,
+    attemptedDate: String
+}

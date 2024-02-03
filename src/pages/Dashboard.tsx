@@ -5,8 +5,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import { Container, ListGroup, Nav } from 'react-bootstrap';
-import Quiz from './Quiz';
+import { Container, ListGroup } from 'react-bootstrap';
 
 const Dashboard = () => {
     //@ts-ignore
@@ -19,7 +18,7 @@ const Dashboard = () => {
 
     const navigate = useNavigate();
 
-    const samplequizzes = [{ name: 'basic math2' }];
+    // const samplequizzes = [{ name: 'basic math2' }];
 
     useEffect(() => {
         console.log('Fetching quizzes..');

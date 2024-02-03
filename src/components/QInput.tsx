@@ -1,5 +1,4 @@
 import { Card, CardTitle, Container, Form, InputGroup } from 'react-bootstrap';
-import { Question } from '../utils/interfaces';
 import { useEffect, useState } from 'react';
 
 // const QInput = (props: { setCurrentChosen: any; question: Question }) => {
