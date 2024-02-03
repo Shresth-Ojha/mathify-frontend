@@ -74,7 +74,7 @@ const Login = () => {
 
     return (
         <>
-            <Container className="d-flex justify-content-center align-items-center" style={{height:"95vh"}}>
+            <Container className="d-flex flex-grow-1 justify-content-center align-items-center">
                 <Row>
                     <Col>
                         <Form onSubmit={handleSubmit}>
