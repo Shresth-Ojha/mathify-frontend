@@ -39,7 +39,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
             console.log(resp);
 
             if (res.ok) {
-                localStorage.removeItem('jwttokenLC')
+                localStorage.removeItem('jwttokenLC');
                 setUser(null);
                 setToken('');
             }
@@ -53,9 +53,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         // console.log(jwtToken);
         // setToken(jwtToken);
 
-        const jwtTokenLC = localStorage.getItem('jwttokenLC') || '';
-        setToken(jwtTokenLC)
-
+        const jwtTokenLC = localStorage.getItem('jwttokenLC');
+        //@ts-ignore
+        setToken(jwtTokenLC);
 
         try {
             const requestOptions = {
@@ -79,7 +79,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
             setLoading(false);
         } catch (error) {
             console.log('Error while authenticating: ', error);
-            alert('Failed to connect..')
+            alert('Failed to connect..');
         }
     };
 
@@ -88,7 +88,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
             const requestOptions = {
                 method: 'GET',
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${localStorage.getItem(
+                        'jwttokenLC'
+                    )}`,
                 },
                 credentials: 'include' as RequestCredentials,
             };
@@ -113,7 +115,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
             const requestOptions = {
                 method: 'GET',
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${localStorage.getItem(
+                        'jwttokenLC'
+                    )}`,
                 },
                 credentials: 'include' as RequestCredentials,
             };
@@ -141,7 +145,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
             const requestOptions = {
                 method: 'POST',
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${localStorage.getItem(
+                        'jwttokenLC'
+                    )}`,
                 },
                 credentials: 'include' as RequestCredentials,
                 body: JSON.stringify(reqBody),
@@ -167,11 +173,13 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
             const requestOptions = {
                 method: 'GET',
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${localStorage.getItem(
+                        'jwttokenLC'
+                    )}`,
                 },
                 credentials: 'include' as RequestCredentials,
             };
-            
+
             const res = await fetch(
                 import.meta.env.VITE_BACKEND + '/report/' + reportId,
                 requestOptions
