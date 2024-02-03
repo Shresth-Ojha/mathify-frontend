@@ -1,4 +1,5 @@
 import ReactDOM from 'react-dom/client';
+import { Analytics } from '@vercel/analytics/react';
 import App from './App.tsx';
 import './index.css';
 import { AuthProvider } from './store/auth.tsx';
@@ -12,7 +13,8 @@ root.render(
     <BrowserRouter>
         <AuthProvider>
             <App />
+            <Analytics />
         </AuthProvider>
     </BrowserRouter>
-//  </React.StrictMode>
+    //  </React.StrictMode>
 );
