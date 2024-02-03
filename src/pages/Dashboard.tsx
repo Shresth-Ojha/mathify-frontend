@@ -29,7 +29,6 @@ const Dashboard = () => {
         if (!q.is_published) {
             alert('Not published yet!');
         } else {
-            // alert("starting")
             navigate('/quiz/' + q._id);
             return
         }

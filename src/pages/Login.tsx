@@ -62,8 +62,8 @@ const Login = () => {
             if (resp.message == "Password didn't match.") {
                 alert('Wrong Credentials!');
             } else if (
-                resp.message ==
-                "User with the mail yourname@domain.co doesn't exist"
+                resp.message.slice(0,4) ==
+                "User"
             ) {
                 alert('Not registered. Enter correct email!');
             }
@@ -75,6 +75,7 @@ const Login = () => {
             }
         } catch (error) {
             console.log(error);
+            alert('Something went wrong!');
         }
     };
 

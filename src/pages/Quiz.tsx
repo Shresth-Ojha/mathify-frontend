@@ -181,7 +181,7 @@ const Quiz = () => {
     const handleExamSubmit = async () => {
         submitExam(currentExam._id, submission)
             .then((reportId: string) => {
-                alert('submitted');
+                alert('Submitted');
                 navigate('/report/' + reportId);
                 return;
             })
@@ -201,7 +201,7 @@ const Quiz = () => {
                 <Container className="mt-5 d-flex flex-column flex-grow-1 justify-content-between mb-5">
                     <Container>
                         <div>
-                            <h1>hey {currentExam.name} </h1>
+                            <h1>{currentExam.name} </h1>
                         </div>
                         <div className="mt-4">
                             {currentQuestion >= questions.length ? (
