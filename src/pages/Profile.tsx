@@ -4,7 +4,6 @@ import { useAuth } from '../store/auth';
 import { getQuote } from 'inspirational-quotes';
 
 const Profile = () => {
-    console.log(getQuote());
     // @ts-ignore
     const { user } = useAuth();
 

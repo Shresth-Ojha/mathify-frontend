@@ -6,7 +6,7 @@ import randomColor from 'randomcolor';
 const QMatch = ({
     options,
     answers,
-    particularQuestionSubmission,
+    // particularQuestionSubmission,
     setParticularQuestionSubmission,
     question_index,
     leftColorForMatchQ,
@@ -78,9 +78,9 @@ const QMatch = ({
         //     }
         // }
 
-        console.log(leftColorForMatchQ);
-        console.log(mapForMatchQ);
-        console.log(mapReverseForMatchQ);
+        // console.log(leftColorForMatchQ);
+        // console.log(mapForMatchQ);
+        // console.log(mapReverseForMatchQ);
 
         // setLeftColors(leftColorForMatchQ[question_index]);
 
@@ -112,7 +112,7 @@ const QMatch = ({
             setLeftColors({ ...leftColors, [left]: color });
         }
 
-        console.log(right);
+        // console.log(right);
 
         setMap({ ...map, [left]: index + 1 });
         setMapReverse({ ...mapReverse, [right]: 0, [index + 1]: left });
@@ -123,7 +123,6 @@ const QMatch = ({
 
         let temp: string[] = [];
         const keys = Object.keys(map);
-        console.log('aftering objecting:', keys);
 
         for (var i = 0; i < keys.length; i++) {
             if (map[i + 1] === 0) {
@@ -135,7 +134,6 @@ const QMatch = ({
         }
 
         setParticularQuestionSubmission(temp);
-        console.log(particularQuestionSubmission);
     }, [map]);
 
     useEffect(() => {

@@ -22,7 +22,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const logout = async () => {
         try {
-            console.log('logging out -> ', token);
+            console.log('Logging out...');
             const requestOptions = {
                 method: 'GET',
                 headers: {
@@ -35,8 +35,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
                 import.meta.env.VITE_BACKEND + '/user/logout',
                 requestOptions
             );
+            //@ts-ignore
             const resp = await res.json();
-            console.log(resp);
+            // console.log(resp);
 
             if (res.ok) {
                 localStorage.removeItem('jwttokenLC');
@@ -71,7 +72,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
                 requestOptions
             );
             const resp = await res.json();
-            console.log(resp);
+            // console.log(resp);
 
             if (res.ok) {
                 setUser(resp.data.user);
@@ -100,7 +101,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
                 requestOptions
             );
             const resp = await res.json();
-            console.log(resp);
+            // console.log(resp);
             if (res.ok) {
                 const quizzes = resp.data;
                 setQuizzes(quizzes);
@@ -127,7 +128,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
                 requestOptions
             );
             const resp = await res.json();
-            console.log(resp);
+            // console.log(resp);
             if (res.ok) {
                 setCurrentExam(resp);
             }
@@ -158,9 +159,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
                 requestOptions
             );
             const resp = await res.json();
-            console.log(resp);
+            // console.log(resp);
             if (res.ok) {
-                console.log('submiited brother');
+                console.log('Submiited brother!');
                 return resp.data.report._id;
             }
         } catch (error) {
@@ -185,7 +186,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
                 requestOptions
             );
             const resp = await res.json();
-            console.log(resp);
+            // console.log(resp);
             if (res.ok) {
                 const detailedReports = resp.data.report;
                 var tempReports: ReportType[] = [];

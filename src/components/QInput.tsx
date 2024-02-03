@@ -81,7 +81,7 @@ const QInput = ({
             temp.push(chosen[i+1])
         }
         setParticularQuestionSubmission(temp)
-        console.log(particularQuestionSubmission)
+        // console.log(particularQuestionSubmission)
     }, [chosen]);
 
     //chosen to list then to particularsubmission

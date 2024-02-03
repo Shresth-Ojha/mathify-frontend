@@ -29,7 +29,6 @@ const Register = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(userRegister);
 
         try {
             const requestOptions = {
@@ -39,18 +38,23 @@ const Register = () => {
                 },
                 body: JSON.stringify(userRegister),
             };
-            console.log("sending...")
+            console.log("Sending...")
             const res = await fetch(
                 import.meta.env.VITE_BACKEND + '/auth',
                 requestOptions
             );
-            console.log(res)
+
+            //@ts-ignore
+            const resp = await res.json();
+            // console.log(resp)
+
+
 
             if(res.ok){
-                const resp = await res.json();
                 alert('Please login now')
                 navigate('/login')
-                console.log(resp);
+            } else {
+                alert('Something went wrong or email already exists!')
             }
             
         } catch (error) {

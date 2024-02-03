@@ -21,11 +21,10 @@ const Login = () => {
     const { setToken, setUser, user } = useAuth();
 
     useEffect(() => {
-        if(!!user) {
-            navigate('/dashboard')
+        if (!!user) {
+            navigate('/dashboard');
         }
-    })
-
+    });
 
     const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
         const name = e.target.name;
@@ -41,7 +40,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            console.log('logging in...');
+            console.log('Logging in...');
 
             const requestOptions = {
                 method: 'POST',
@@ -52,21 +51,28 @@ const Login = () => {
                 redirect: 'follow' as RequestRedirect,
                 credentials: 'include' as RequestCredentials,
             };
-            
+
             const res = await fetch(
-                import.meta.env.VITE_BACKEND+'/auth/login',
+                import.meta.env.VITE_BACKEND + '/auth/login',
                 requestOptions
             );
 
             const resp = await res.json();
-            console.log(resp);
-            if (res.ok) {
-                setUser({name: resp.data.name, email: resp.data.email})
-                localStorage.setItem('jwttokenLC', resp.data.token)
-                setToken(resp.data.token)
-                navigate('/dashboard')
+            // console.log(resp);
+            if (resp.message == "Password didn't match.") {
+                alert('Wrong Credentials!');
+            } else if (
+                resp.message ==
+                "User with the mail yourname@domain.co doesn't exist"
+            ) {
+                alert('Not registered. Enter correct email!');
             }
-            
+            if (res.ok) {
+                setUser({ name: resp.data.name, email: resp.data.email });
+                localStorage.setItem('jwttokenLC', resp.data.token);
+                setToken(resp.data.token);
+                navigate('/dashboard');
+            }
         } catch (error) {
             console.log(error);
         }
@@ -121,7 +127,6 @@ const Login = () => {
                     </Col>
                 </Row>
             </Container>
-
         </>
     );
 };

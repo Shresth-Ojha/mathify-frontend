@@ -181,7 +181,6 @@ const Quiz = () => {
     const handleExamSubmit = async () => {
         submitExam(currentExam._id, submission)
             .then((reportId: string) => {
-                console.log(reportId);
                 alert('submitted');
                 navigate('/report/' + reportId);
                 return;
