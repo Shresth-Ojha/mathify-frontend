@@ -80,7 +80,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
             setLoading(false);
         } catch (error) {
             console.log('Error while authenticating: ', error);
-            alert('Failed to connect..');
+            alert('Server spinning up, refresh after 1 minute');
         }
     };
 
